@@ -1,5 +1,5 @@
 ---
-title: "Hvorfor en god CLI slår MCP for AI-agenter"
+title: "Hvorfor en god CLI ofte slår MCP for AI-agenter"
 description: "MCP fik al hypen, men for det meste lokale udviklingsarbejde er en velbygget CLI både billigere, hurtigere og mere agent-venlig. Her er hvorfor — og hvor MCP til gengæld vinder."
 date: 2026-05-10
 tags: ["AI-agenter", "MCP", "CLI", "Tooling"]
@@ -59,7 +59,7 @@ Protokollen tvinger det ikke — lazy-loading-mønstre er på vej (Claude Code's
 
 CLIs fungerer omvendt by design: agenten kalder `tool --help` *kun* når det er relevant. Pull frem for push. Det er en stor besparelse i context window — og context window er den dyreste reelle ressource i en agent-session, både i kroner og i kvalitet (jo længere kontekst, jo mere "tabt" agent).
 
-## 4. Standard streams + exit codes = robust fejlhåndtering
+## 4. Standard streams + exit codes = velkendt fejlhåndtering
 
 CLI'er har 60 års historie i at signalere succes og fejl klart:
 
@@ -67,15 +67,17 @@ CLI'er har 60 års historie i at signalere succes og fejl klart:
 - `stderr` for fejl og status
 - Exit code = 0 (succes) eller != 0 (fejl)
 
-Agenten kan trivielt detektere fejl: `cmd && echo OK || echo FAIL`, eller bare se på exit-koden. MCP-servere skal hver især implementere fejl-konventioner — og i praksis lander det ofte som "200 OK med en `error`-key i JSON-svaret" som agenten skal parse og forstå semantisk.
+Agenten kan trivielt detektere fejl: `cmd && echo OK || echo FAIL`, eller bare se på exit-koden. MCP er ikke uden standard her — protokollen bruger JSON-RPC, så protokol-fejl er strukturerede, og tool-execution-fejl signaleres via `isError: true`. Men *semantikken bag* fejlen — hvad agenten skal gøre ved den, om operationen kan retries, om den var idempotent — ligger ofte i tool-specifikke konventioner som agenten skal lære for hver server.
 
-Forskellen virker lille. I praksis er den enorm: en agent der falder over en uventet fejl-format bruger 5-10 turn på at finde ud af om operationen faktisk fejlede.
+Exit codes vinder på et andet plan: alle ved hvad `exit 1` betyder. Færre ved hvad et givent MCP-tools `isError`-content faktisk indeholder uden at læse server-dokumentationen.
 
-## 5. Universalitet — alt findes allerede som CLI
+## 5. Universalitet — modenhed og bredde
 
-Stort set hvert eneste dev-værktøj har en CLI. `git`, `kubectl`, `gh`, `aws`, `psql`, `terraform`, `docker`, `jq`, `curl`, `rg`, `fd`, `bat` ... Agenten kan bruge dem **uden at nogen skal bygge en MCP-wrapper først**.
+Stort set hvert eneste dev-værktøj har en CLI. `git`, `kubectl`, `gh`, `aws`, `psql`, `terraform`, `docker`, `jq`, `curl`, `rg`, `fd`, `bat` ... Agenten kan bruge dem **uden at nogen skal bygge en MCP-wrapper først**, og de er trænet ind i LLM'erne fra starten.
 
-MCP-økosystemet er stadig sparsomt i 2026. Du har en håndfuld populære servere (filesystem, git, GitHub), men de fleste interne værktøjer har ingen MCP-version — og når du bygger din egen, ender du ofte med en tynd wrapper rundt om den underliggende CLI. På det tidspunkt har du tilføjet et lag kompleksitet uden at vinde noget.
+MCP-økosystemet vokser hurtigt — Anthropic har angivet tusindvis af community-servere ved udgangen af 2025, og OpenAI's Agents SDK har officiel MCP-support. Men *dækningen* er stadig ujævn, og *kvaliteten* af tilfældige community-servere varierer voldsomt. Modne brede CLIs som `kubectl` eller `git` har 10-20+ års konvergens på UX, output-stabilitet og dokumentation bag sig — det er svært at matche som ny MCP-server.
+
+Praktisk konsekvens: når du står med et internt værktøj der skal bruges af en agent, ender man ofte med at bygge en MCP-server der er en tynd wrapper rundt om den underliggende CLI. På det tidspunkt har du tilføjet et lag kompleksitet uden at vinde meget — medmindre auth, governance eller multi-client-integration er den reelle gevinst.
 
 ## 6. Filsystemet er agentens billige, vedvarende hukommelse
 
@@ -83,7 +85,7 @@ Skriv et stort søgeresultat til `/tmp/findings.json`. Lad agenten referere det 
 
 Eller endnu enklere: `tool > /tmp/output.txt && wc -l /tmp/output.txt`. Agenten ser kun "12.847 linjer", ikke indholdet. Den læser detaljerne kun hvis næste skridt kræver det.
 
-MCP har ingen tilsvarende billig persistent buffer. Hver call returnerer sit fulde output til agentens kontekst — uanset om agenten faktisk havde brug for det.
+MCP har faktisk noget der adresserer dette — *Resources* og *resource links*, så tools kan returnere en URI-reference i stedet for at inline alt indholdet i tool-resultatet. Det er ikke værdiløst. Men i praksis er shell + filsystem mere naturligt og friktionsløst for inner-loop agent-flows: `>`, `|`, `tee`, `head`, `wc`, `jq` er primitiver agenten allerede kender, og de virker på tværs af alle tools uden at hver tool-server skal implementere resource-emission korrekt.
 
 ## 7. Reproducerbarhed — agenter og mennesker bruger samme runbook
 
