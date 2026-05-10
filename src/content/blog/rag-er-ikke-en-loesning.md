@@ -31,7 +31,7 @@ Dette er undervurderet. En RAG-løsning der rammer rigtigt 70% af tiden kan vær
 ## Hvor RAG er en god løsning
 
 - Stor mængde dokumenter ingen kan overskue manuelt
-- Velstruktureret indhold (PDF, Word, wiki) frem for ustruktureret
+- **Parsebart, chunkbart og citerbart indhold** — wiki, HTML, markdown, strukturerede Word-dokumenter, gode tekst-PDF'er. (Scannede PDF'er, layout-tunge bilag og tabeller kræver ekstra dokumentbehandling — RAG-pipeline'n bliver så stærk som dens indgangsled)
 - Use case hvor brugeren kan validere svaret hurtigt (rådgivere, supportere, jurister)
 - Krav om at svar skal kunne spores tilbage til kilde
 
@@ -39,7 +39,7 @@ Dette er undervurderet. En RAG-løsning der rammer rigtigt 70% af tiden kan vær
 
 - Når det reelle problem er manglende struktur i indholdet selv
 - Når svaret skal være 100% korrekt uden menneske i loopet (juridisk binding, finansielle beregninger)
-- Når dokumenterne er meget korte og få (så er det bare prompt-engineering)
+- Når dokumenterne er meget korte og få **og** der ikke er behov for ACL, kildereferencer, versionsstyring eller audit — så er det ofte bare prompt-engineering
 - Når brugerne ikke kan vurdere kvaliteten af svaret
 
 ## Bottom line

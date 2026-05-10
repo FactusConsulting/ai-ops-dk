@@ -19,7 +19,7 @@ Resultatet for to Gemma 4-konfigurationer på samme hardware:
 | **Gemma 4 26B Q6_K** | **98.56 %** | 0.67pp |
 | **Gemma 4 4B BF16** | **96.67 %** | 1.62pp |
 
-**Gabet: 1.89 procentpoint.** På et 350-spørgsmåls testsæt, vurderet af to uafhængige frontier-judges. Det er meget mindre end de fleste forventer.
+**Gabet: 1.89 procentpoint i mit eval-sæt.** På et 350-spørgsmåls testsæt, vurderet af to uafhængige frontier-judges. Det er meget mindre end de fleste forventer — men det er stadig *mit* eval-sæt på *mine* opgaver. Hovedpointen er at gabet på reelle workloads ofte er mindre end den intuitive forventning. Konkrete tal kommer ud af konkrete tests.
 
 ## Hvor er det 1.89pp egentlig forsvundet?
 
@@ -56,21 +56,23 @@ Det er **5× så mange samtidige agent-sessioner** for under 2 procentpoints kva
 
 ## Et par andre fund jeg ikke havde forventet
 
-### 31B slår ikke 26B
+### 31B slog ikke 26B i min konfiguration
 
 Jeg testede en 31B-konfiguration med både Q4_K_M og Q5_K_M kvantisering, i håb om at de ekstra parametre ville hjælpe. **De gjorde det ikke.** Begge scorede inden for støj af 26B (96.97-97.08 %), og **Part B kode-skrivning var faktisk værre** end 26B (65-67 % vs 73 %). Samme broken AWS provider DSL, ufuldstændige Terraform-scaffolds, tynde Ansible playbooks.
 
-Det her er en **model-arkitektur grænse**, ikke et kvantiserings-problem. Konsekvens: invester ikke i større GPU'er udelukkende for at køre 31B i stedet for 26B på samme opgave. Pengene er bedre brugt på flere instanser af 26B — eller på 4B'er hvis throughput er flaskehalsen.
+Mit take: i denne hardware-config og med disse kvantiseringer er 31B ikke værd at investere i over 26B til min use case. Google positionerer 31B dense som stærkere fine-tuning foundation, så hvis I har et fine-tuning-flow er regnestykket muligvis anderledes. **Test selv inden I køber GPU'er**.
 
 ### Quantization matters mere end folk tror
 
 Jeg testede 26B med Q5_K_L (mindre vægte → plads til mere context: 524k vs 458k). Resultatet: **Part B regresserede 15 procentpoint** vs Q6_K. Context-gevinsten var ikke værd at tabe så meget kvalitet.
 
-Læring: **Q6_K er sweet spot for 26B-modeller**. Spar dig selv eksperimentet med aggressive kvantiseringer indtil du har en konkret grund.
+Læring for *denne* model på *denne* hardware: Q6_K var det bedre tradeoff. Den læring generaliserer ikke automatisk til andre modeller, andre kvantiserings-formater eller anden inference-engine — sweet spot er noget I selv skal måle. Men spar jer selv eksperimentet med aggressive kvantiseringer indtil I har en konkret grund.
 
-### TurboQuant KV gør ikke ondt
+### TurboQuant KV — lovende, men test selv
 
-Jeg kører turbo4 KV-cache (en variant af Q4 quantization for KV-cache i llama.cpp's turbo-fork). Forventningen var en lille kvalitetshit. **Reel måling: ingen detekterbar regression**. Du får q8-niveau kvalitet med q4-fodaftryk. Hvis du kører lokalt med begrænset VRAM, er det her en gratis frokost.
+Jeg kører turbo4 KV-cache (en variant af Q4 quantization for KV-cache i llama.cpp's turbo-fork). Forventningen var en lille kvalitetshit. **Reel måling i mit eval-sæt: ingen detekterbar regression**.
+
+Det er et lovende resultat, men ikke et generelt løfte. KV-cache quantization er stadig et område i hurtig udvikling, og effekten kan variere med model, context-længde, workload-type og throughput-mønster (lange contexts kan give dequantization-overhead). Hvis I overvejer det: kør jeres egne målinger på jeres egne workloads, særligt på lange contexts.
 
 ## "Alternative acceptable" — det interessante mønster
 
@@ -85,7 +87,7 @@ En af grundene til at "brug den største model der passer"-defaulten er forælde
 - **Gemma 4-familien** med E4B (4B model) der scorer 96.67 % på mit eval-framework. Et 4B-model på 2024-niveau ville have ligget i 70-80 % området på samme spørgsmål
 - **TurboQuant KV-cache** (Q4-fodaftryk, Q8-kvalitet) — gør det realistisk at have store contexts på begrænset VRAM uden at miste kvalitet
 - **Multi-Token Prediction (MTP)** lander i vLLM for understøttede modeller — markant throughput-løft
-- **Mistral Small 3** (24B-klassen) lukker gabet til frontier-modellerne på instruction following og struktureret output
+- **Mistral Small-familien** (Small 3 fra januar 2025, Small 3.1 fra marts 2025, og deres seneste iterationer) har vist 24B-klassen lukker gabet til frontier-modellerne på instruction following og struktureret output
 - **Qwen3-familien** har specifikt forbedret dansk og andre ikke-engelske sprog, en svaghed der historisk har gjort lokale modeller mindre brugbare i DK
 - **Distilleret Opus-niveau ræsonnement** ned til 27B parametre i flere eksperimentelle releases (kvalitet stadig variabel, men retningen er klar)
 

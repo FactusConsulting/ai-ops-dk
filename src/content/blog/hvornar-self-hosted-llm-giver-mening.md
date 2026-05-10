@@ -14,9 +14,17 @@ Når man skærer al hype væk, er der reelt tre dimensioner der bestemmer om sel
 
 ### 1. Volumen og forudsigelighed
 
-LLM-API'er er ekstremt fleksible men også relativt dyre pr. token. Self-hosting har høje faste omkostninger (GPU-hardware eller reserved capacity) men lave marginale omkostninger.
+LLM-API'er er ekstremt fleksible men har en pris pr. token. Self-hosting har høje faste omkostninger (GPU-hardware eller reserved capacity) men lave marginale omkostninger.
 
-Tommelfingerregel: Hvis I har en *stabil*, *kontinuerlig* forespørgselsmængde der overstiger ~50 millioner tokens/måned på samme model — så begynder self-hosting at give økonomisk mening. Under det er API'erne svære at slå.
+Break-even er svær at angive med ét tal. I 2026 er API-priserne på Sonnet- og GPT-mini-niveau modeller blevet markant lavere end for et par år siden, og en business case for self-hosting skal regne på flere variabler samtidig:
+
+- **Modelpris pr. token** — Sonnet 4.6 til ~$3 input / $15 output, GPT-mini-modeller endnu billigere
+- **Output-ratio** — output-tokens er typisk 5-6× dyrere end input. Workloads med høj output-andel (kode-generation, lange svar) tipper hurtigere mod self-hosting
+- **GPU-utilization** — en H100 der står stille 70 % af tiden er meget dyrere pr. produktiv token end API'er. Self-hosting kræver høj og forudsigelig last
+- **Caching** — leverandørernes prompt-caching kan halvere reel pris ved gentagne system prompts
+- **MLOps-overhead** — drift, monitoring, model-evals, opdatering, backup. Det er ikke gratis
+
+Praktisk: for mange workloads ligger break-even snarere ved **hundreder af millioner eller milliarder tokens/måned** end de få millioner — medmindre I allerede har hardwaren, kører meget billigere/mindre lokale modeller, eller compliance gør cloud umulig. Den eneste pålidelige måde at vurdere det på er at lave business casen med jeres faktiske API-forbrug og lokal-utilization.
 
 ### 2. Reelle data-restriktioner
 
