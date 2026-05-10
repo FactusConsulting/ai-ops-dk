@@ -23,6 +23,7 @@ export const site = {
   },
   nav: [
     { label: "Ydelser", href: "/#ydelser" },
+    { label: "DevOps & Platform ↗", href: "https://factus.dk", external: true },
     { label: "Cases", href: "/cases" },
     { label: "Blog", href: "/blog" },
     { label: "Om mig", href: "/#om-mig" },

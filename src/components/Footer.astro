@@ -39,7 +39,12 @@ const year = new Date().getFullYear();
         <ul class="mt-4 space-y-2.5">
           {site.nav.map((item) => (
             <li>
-              <a href={item.href} class="text-sm text-ink-600 hover:text-ink-900 transition-colors">
+              <a
+                href={item.href}
+                target={"external" in item && item.external ? "_blank" : undefined}
+                rel={"external" in item && item.external ? "noopener" : undefined}
+                class="text-sm text-ink-600 hover:text-ink-900 transition-colors"
+              >
                 {item.label}
               </a>
             </li>

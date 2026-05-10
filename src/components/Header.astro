@@ -1,5 +1,7 @@
 ---
 import { site } from "../config/site";
+
+const isExternal = (item: any) => "external" in item && item.external;
 ---
 
 <header class="sticky top-0 z-50 backdrop-blur-md bg-white/80 border-b border-ink-100">
@@ -27,6 +29,8 @@ import { site } from "../config/site";
       {site.nav.map((item) => (
         <a
           href={item.href}
+          target={isExternal(item) ? "_blank" : undefined}
+          rel={isExternal(item) ? "noopener" : undefined}
           class="text-sm font-medium text-ink-600 hover:text-ink-900 transition-colors"
         >
           {item.label}
@@ -56,6 +60,8 @@ import { site } from "../config/site";
       {site.nav.map((item) => (
         <a
           href={item.href}
+          target={isExternal(item) ? "_blank" : undefined}
+          rel={isExternal(item) ? "noopener" : undefined}
           class="px-3 py-2.5 rounded-md text-base font-medium text-ink-700 hover:bg-ink-50"
         >
           {item.label}
