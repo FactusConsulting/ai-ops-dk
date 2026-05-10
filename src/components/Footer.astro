@@ -8,15 +8,29 @@ const year = new Date().getFullYear();
     <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
       <div class="md:col-span-2">
         <div class="flex items-center gap-2.5">
-          <span class="flex items-center justify-center w-9 h-9 rounded-lg bg-gradient-to-br from-brand-600 to-accent-600 text-white font-bold text-sm">
-            AI
-          </span>
+          <svg class="w-9 h-9 text-brand-600" viewBox="0 0 200 200" fill="none" aria-hidden="true">
+            <g stroke="currentColor" fill="none" stroke-width="11">
+              <circle cx="100" cy="100" r="80"/>
+              <circle cx="100" cy="100" r="54"/>
+              <circle cx="100" cy="100" r="28"/>
+            </g>
+            <g fill="currentColor">
+              <circle cx="100" cy="100" r="8"/>
+              <circle cx="169.3" cy="60" r="12"/>
+              <circle cx="53.2" cy="73" r="11"/>
+              <circle cx="100" cy="128" r="9"/>
+            </g>
+          </svg>
           <span class="font-display font-bold text-lg tracking-tight text-ink-900">
             ai-ops<span class="text-brand-600">.</span>dk
           </span>
         </div>
         <p class="mt-4 text-sm text-ink-600 max-w-md leading-relaxed">
           {site.description}
+        </p>
+        <p class="mt-5 text-xs text-ink-500">
+          {site.company.legalName}{site.company.cvr && ` · CVR ${site.company.cvr}`}<br />
+          {site.company.address} · <a href={site.related.factus} class="hover:text-ink-700 underline decoration-ink-300 underline-offset-2">factus.dk</a>
         </p>
       </div>
 
@@ -52,8 +66,8 @@ const year = new Date().getFullYear();
     </div>
 
     <div class="mt-12 pt-6 border-t border-ink-200 flex flex-col md:flex-row justify-between gap-4 text-xs text-ink-500">
-      <p>© {year} {site.owner.name}. Alle rettigheder forbeholdes.</p>
-      <p>Bygget med Astro · hostet på Cloudflare Pages</p>
+      <p>© {year} {site.company.legalName}. Alle rettigheder forbeholdes.</p>
+      <p>Bygget med Astro · hostet på Cloudflare</p>
     </div>
   </div>
 </footer>

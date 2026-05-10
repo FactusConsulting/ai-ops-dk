@@ -9,9 +9,17 @@ export const site = {
     name: "Lars W. Andersen",
     role: "AI-konsulent og rådgiver",
     email: "lars@ai-ops.dk",
-    phone: "+45 XX XX XX XX",
+    phone: "+45 20 46 80 20",
     linkedin: "https://www.linkedin.com/in/larswa/",
     location: "Danmark",
+  },
+  company: {
+    legalName: "Factus Consulting ApS",
+    address: "Rørløkken 62, 2730 Herlev",
+    cvr: "", // TODO: udfyld CVR-nummer (find på virk.dk)
+  },
+  related: {
+    factus: "https://factus.dk",
   },
   nav: [
     { label: "Ydelser", href: "/#ydelser" },

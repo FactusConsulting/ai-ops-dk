@@ -4,10 +4,20 @@ import { site } from "../config/site";
 
 <header class="sticky top-0 z-50 backdrop-blur-md bg-white/80 border-b border-ink-100">
   <div class="container-page flex items-center justify-between h-16 md:h-18">
-    <a href="/" class="flex items-center gap-2.5 group">
-      <span class="relative flex items-center justify-center w-9 h-9 rounded-lg bg-gradient-to-br from-brand-600 to-accent-600 text-white font-bold text-sm shadow-sm">
-        AI
-      </span>
+    <a href="/" class="flex items-center gap-2.5 group" aria-label="ai-ops.dk forside">
+      <svg class="w-9 h-9 text-brand-600 transition-transform group-hover:rotate-12" viewBox="0 0 200 200" fill="none" aria-hidden="true">
+        <g stroke="currentColor" fill="none" stroke-width="11">
+          <circle cx="100" cy="100" r="80"/>
+          <circle cx="100" cy="100" r="54"/>
+          <circle cx="100" cy="100" r="28"/>
+        </g>
+        <g fill="currentColor">
+          <circle cx="100" cy="100" r="8"/>
+          <circle cx="169.3" cy="60" r="12"/>
+          <circle cx="53.2" cy="73" r="11"/>
+          <circle cx="100" cy="128" r="9"/>
+        </g>
+      </svg>
       <span class="font-display font-bold text-lg tracking-tight text-ink-900">
         ai-ops<span class="text-brand-600">.</span>dk
       </span>
