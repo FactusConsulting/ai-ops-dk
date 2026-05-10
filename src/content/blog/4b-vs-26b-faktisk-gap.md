@@ -10,6 +10,8 @@ Den default-antagelse jeg møder mest i AI-projekter er en enkelt sætning: *"vi
 
 Mine egne tests siger noget andet. Jeg har bygget et internt eval-framework med 350+ spørgsmål fordelt på infrastruktur, udvikling, arkitektur og cross-domain scenarier. Hver model køres 3 gange og bedømmes af to parallelle Claude Opus-judges per kørsel. Det er ikke benchmarks fra Hugging Face leaderboards — det er spørgsmål der matcher det reelle arbejde modellerne skal lave.
 
+Og vigtigt for hvad jeg er på vej til: **det hele kører på lokal hardware der har kostet mindre end 10.000 kr.** Ikke et datacenter-rack af H100'ere. En enkelt forbrugerklasse-GPU pr. node, llama.cpp og en smule tuning. Det er det realistiske setup for mange små og mellemstore organisationer der gerne vil køre AI lokalt — og det er det setup tallene nedenfor er målt på.
+
 Resultatet for to Gemma 4-konfigurationer på samme hardware:
 
 | Model | Score | Spread (3 runs) |
@@ -100,6 +102,8 @@ Vær ærlig om grænserne:
 ## Bottom line
 
 "Brug den største model der passer" er den dyreste default i AI-infrastruktur. Den koster GPU-investeringer der kunne være brugt smartere, og den lukker døren for use-cases hvor parallelitet er mere værd end et par procentpoint.
+
+Og hold den her i mente: **alt det her er målt på hardware for under 10.000 kr.** Ikke H100-rack, ikke MI300X-kapacitet — bare en enkelt forbrugerklasse-GPU pr. node og et godt setup omkring den. Hvis det er hvad man kan opnå for under en månedsløn i hardware-investering, så er der ikke meget grund til at antage at "lokal AI" er forbeholdt store organisationer.
 
 Mit konkrete råd: **mål før du beslutter**. Byg et lille eval-framework der dækker jeres faktiske use-cases (ikke bare standard-benchmarks). Test både den store og den lille model. Mål gabet på *jeres* opgaver — det er sandsynligvis mindre end du tror.
 
