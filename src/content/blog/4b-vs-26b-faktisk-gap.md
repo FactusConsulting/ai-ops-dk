@@ -91,7 +91,7 @@ En af grundene til at "brug den største model der passer"-defaulten er forælde
 
 Det betyder også at en tommelfingerregel "lokal model = -10 procentpoint vs frontier" ikke længere holder. På mange opgavetyper er gabet under 5 pp — og krymper hver måned. Hvis I traf jeres "vi går med cloud frontier"-beslutning for 12 måneder siden ud fra dårlig kvalitet på lokale modeller, er det værd at gentage øvelsen nu. Tallene er anderledes.
 
-## Den praktiske strategi: rute opgaver, brug ikke én model til alt
+## Den praktiske strategi: fordel opgaverne, brug ikke én model til alt
 
 Det her er hvor det bliver interessant. I stedet for at vælge én model og bruge den til alt, opdeler jeg opgaverne efter hvad der er flaskehalsen:
 
@@ -106,7 +106,7 @@ Det her er hvor det bliver interessant. I stedet for at vælge én model og brug
 - Klassificering, opsummering, formattering, fakta-opslag
 - Workflow-automation hvor outputtet er struktureret data
 
-Resultat på den hardware jeg har: et reelt setup hvor begge modeller kører samtidigt — 26B på én GPU-node, 4B med 10 slots på en anden — og agenterne routes efter opgave-type. Det er den faktiske produktions-konfiguration, ikke teori.
+Resultat på den hardware jeg har: et reelt setup hvor begge modeller kører samtidigt — 26B på én GPU-node, 4B med 10 slots på en anden — og agenterne fordeles til den rigtige model efter opgave-type. Det er den faktiske produktions-konfiguration, ikke teori.
 
 ## Hvornår skal du så *ikke* gå med en lille model?
 
