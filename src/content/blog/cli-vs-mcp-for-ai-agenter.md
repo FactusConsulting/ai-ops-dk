@@ -1,6 +1,6 @@
 ---
 title: "Hvorfor en god CLI slår MCP for AI-agenter"
-description: "MCP fik al hypen, men i praksis er en velbygget CLI både billigere, hurtigere og mere agent-venlig. Her er hvorfor — med konkrete eksempler."
+description: "MCP fik al hypen, men for det meste lokale udviklingsarbejde er en velbygget CLI både billigere, hurtigere og mere agent-venlig. Her er hvorfor — og hvor MCP til gengæld vinder."
 date: 2026-05-10
 tags: ["AI-agenter", "MCP", "CLI", "Tooling"]
 readingTime: "7 min"
@@ -8,7 +8,7 @@ readingTime: "7 min"
 
 MCP — Model Context Protocol — fik al hypen da det landede i 2024. En standardiseret protokol så agenter kunne tale med eksterne værktøjer. God idé på papir.
 
-Men efter halvandet års arbejde med både MCP-servere og almindelige CLI-tools i agent-flows er min konklusion klar: **for de fleste agent-opgaver er en velbygget CLI federe end en MCP-server**. Ikke som princip, men af konkrete, målbare grunde.
+Men efter halvandet års arbejde med både MCP-servere og almindelige CLI-tools i agent-flows er min konklusion klar: **for det meste lokale udviklingsarbejde er en velbygget CLI federe end en MCP-server**. Ikke som princip — MCP har sine reelle styrker, særligt på governance og eksterne integrationer (det vender vi tilbage til) — men af konkrete, målbare grunde i de scenarier hvor man har valget.
 
 Her er dem.
 
@@ -53,9 +53,11 @@ Resultatet: agenten lærer at bruge værktøjet *korrekt og effektivt* — fra v
 
 ## 3. Help er pull, ikke push
 
-Når du connecter en MCP-server, lander hele dens tool-katalog i agentens kontekst. Hvert tool-schema. Hver beskrivelse. Hele tiden. Også de 80% af værktøjer agenten ikke skal bruge til netop dén opgave.
+I de fleste MCP-implementeringer i dag — særligt med default-clients — bliver hele tool-kataloget exposed til LLM'en når en server connectes. Hvert tool-schema, hver beskrivelse, i context fra første token. Også de 80 % af værktøjer agenten ikke skal bruge til netop dén opgave.
 
-CLIs fungerer omvendt: agenten kalder `tool --help` *kun* når det er relevant. Pull frem for push. Det er en stor besparelse i context window — og context window er den dyreste reelle ressource i en agent-session, både i kroner og i kvalitet (jo længere kontekst, jo mere "tabt" agent).
+Protokollen tvinger det ikke — lazy-loading-mønstre er på vej (Claude Code's deferred tools / `ToolSearch` er et tidligt eksempel) — men eager loading er stadig den udbredte standard, og det er det de fleste agent-setups ender med i praksis.
+
+CLIs fungerer omvendt by design: agenten kalder `tool --help` *kun* når det er relevant. Pull frem for push. Det er en stor besparelse i context window — og context window er den dyreste reelle ressource i en agent-session, både i kroner og i kvalitet (jo længere kontekst, jo mere "tabt" agent).
 
 ## 4. Standard streams + exit codes = robust fejlhåndtering
 
@@ -97,16 +99,24 @@ Det er en komposition af tre værktøjer der intet ved om hinanden, koblet samme
 
 Den fleksibilitet kommer gratis med shell. MCP kræver at *nogen* tænker hvert composition-mønster ud på forhånd og bygger det som tool.
 
-## Hvornår MCP stadig giver mening
+## Hvor MCP er det rigtige valg
 
-MCP er ikke værdiløs. Det er det rigtige valg når:
+Så langt om hvor CLI vinder. MCP er ikke værdiløs — det er reelt stærkere end CLI på flere fronter, og dem er værd at fremhæve:
 
-- Værktøjet er **fundamentalt stateful og interaktivt** — fx en databasesession med transaktion eller en igangværende chat med en ekstern API
-- Værktøjet kører i et miljø **uden shell** — browser-baseret agent, mobile, en Sandbox uden /bin/sh
-- Du har brug for **strukturerede streaming-events** med protokol-niveau garanti (live progress fra et langt job med struktureret feedback agenten skal handle på undervejs)
-- Tool'et **eksisterer ikke som CLI** og du har ikke kapacitet til at bygge en
+- **Governance og sikkerhed.** Capability negotiation, struktureret OAuth, scope-baserede permissions, audit-baseret adgangsstyring. CLIs kræver til gengæld sandboxing (Docker, gVisor eller eksplicit pre-approval-flow på shell-kommandoer) for at være enterprise-trygge. Hvis I står med regulerede data, en compliance-bagage, eller en agent der skal kunne handle på vegne af mange brugere med forskellige tilladelser, vinder MCP klart
+- **Eksterne SaaS-integrationer.** Når agenten skal tale med Notion, Slack, Salesforce, GitHub Enterprise eller en intern microservice over OAuth, er MCP designet til netop det — protokollen håndterer auth-flow, tilladelses-scoping og struktureret API-kontrakt på en måde der ville være ad-hoc og fejlbarslig med shell
+- **Stateful, interaktive sessioner** — fx en databasesession med transaktion eller en igangværende multi-step API-flow med løbende state
+- **Miljøer uden shell** — browser-baseret agent, mobile, en sandbox uden `/bin/sh`
+- **Strukturerede streaming-events** med protokol-niveau garanti (live progress fra et langt job hvor agenten skal handle på struktureret feedback undervejs)
 
-Det er bare ikke standardtilfældet. I 2026 er MCP undtagelsen — ikke reglen.
+## Inner loop vs outer loop — den klare model
+
+Den mest brugbare måde at tænke om valget på er at skelne mellem **inner loop** og **outer loop**:
+
+- **Inner loop** er det lokale udviklingsarbejde — filsystem, git, build, test, linter, lokale dev-tools, debug-output, container-introspection, database-eksplorering. Her er CLI klart bedst. Værktøjerne er kendt af LLM'en fra dens træningsdata, kompositioner sker via shell, output går gennem stdout, ingen auth-overhead, ingen protokol-lag
+- **Outer loop** er det eksterne — SaaS-tjenester, interne microservices, prod-databaser med følsomme data, regulerede systemer, agenter der handler på vegne af brugere. Her er MCP designet til at vinde — auth, capability negotiation, audit, struktureret kontrakt
+
+I praksis rammer de fleste reelle agent-flows begge: man læser en intern wiki (outer / MCP), trækker noget viden ud, redigerer kode lokalt (inner / CLI), tester, committer og deployer via en gated CI-pipeline (outer / MCP igen). Pointen er ikke at vælge den ene af dem — pointen er at **bruge dem hvor de hører hjemme** og ikke tvinge MCP ind i inner loop fordi det føles "mere moderne", eller omvendt at lade en CLI-agent hamre på en prod-database uden auth-lag fordi det er hurtigere at sætte op.
 
 ## Konkret råd: byg CLIs med agenter i tankerne
 
@@ -123,8 +133,8 @@ Og når du står over for et nyt internt værktøj: spørg "hvordan ville en age
 
 ## Bottom line
 
-MCP løser et reelt problem — standardiseret tool-discovery for agenter — men prisen er høj: tokens, kompleksitet, og en udvanding af 60 års shell-konventioner der allerede virker.
+MCP løser et reelt problem — standardiseret tool-discovery, governance og auth for agenter der skal tale med eksterne systemer. Men prisen er høj i context-tokens, kompleksitet og setup-overhead, og prisen er ikke det værd hvis du bare prøver at give din agent adgang til lokale udviklings-værktøjer der allerede har en udmærket CLI.
 
-I de fleste praktiske scenarier får du mere ud af at gøre dine eksisterende CLIs *agent-venlige* end at bygge en MCP-server. Det er billigere, mere komposabelt, og det dur både til mennesker og agenter på samme tid.
+Tommelfingerreglen jeg er endt med: **start CLI-first, læg MCP til hvor det giver reel governance- eller integrationsværdi.** Inner loop hører til shell. Outer loop kan ofte bedst leveres via MCP. Den ene udelukker ikke den anden — pointen er at vælge bevidst i stedet for at default til "alt skal være MCP fordi det er det nye".
 
 Står I med et internt værktøj der gerne skulle kunne bruges af både udviklere og AI-agenter? [Jeg hjælper gerne med design og review](/#kontakt).
