@@ -1,0 +1,55 @@
+---
+import { site } from "../config/site";
+---
+
+<section id="kontakt" class="section-y bg-white">
+  <div class="container-page">
+    <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-ink-900 via-ink-800 to-brand-900 px-8 py-16 md:px-16 md:py-24">
+      <div class="absolute inset-0 bg-grid opacity-10 pointer-events-none" aria-hidden="true"></div>
+      <div class="absolute -top-32 -right-32 w-[500px] h-[500px] bg-accent-500/20 rounded-full blur-3xl pointer-events-none" aria-hidden="true"></div>
+
+      <div class="relative max-w-3xl">
+        <span class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-brand-200">
+          <span class="w-8 h-px bg-brand-300"></span>
+          Lad os snakke
+        </span>
+        <h2 class="font-display font-bold text-4xl md:text-5xl tracking-tight text-white mt-4 leading-[1.1]">
+          Har I en konkret AI-udfordring?
+          <span class="block text-brand-200 mt-2">Så lad os tage en snak.</span>
+        </h2>
+        <p class="mt-6 text-lg text-ink-200 max-w-2xl leading-relaxed">
+          Første samtale er altid uforpligtende. Vi bruger 30 minutter på at forstå
+          jeres situation, og du går derfra med konkret feedback — uanset om vi
+          ender med at arbejde sammen eller ej.
+        </p>
+
+        <div class="mt-10 flex flex-col sm:flex-row gap-4">
+          <a
+            href={`mailto:${site.owner.email}?subject=Henvendelse%20fra%20ai-ops.dk`}
+            class="inline-flex items-center justify-center gap-2 bg-white text-ink-900 px-6 py-3.5 rounded-lg font-semibold text-base hover:bg-ink-100 transition-colors"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l9 6 9-6M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+            {site.owner.email}
+          </a>
+          <a
+            href={site.owner.linkedin}
+            target="_blank"
+            rel="noopener"
+            class="inline-flex items-center justify-center gap-2 bg-white/10 text-white px-6 py-3.5 rounded-lg font-semibold text-base hover:bg-white/15 border border-white/20 transition-colors backdrop-blur-sm"
+          >
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M19 0h-14C2.24 0 0 2.24 0 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5V5c0-2.76-2.24-5-5-5zM8 19H5V8h3v11zM6.5 6.73c-.97 0-1.75-.79-1.75-1.76s.78-1.76 1.75-1.76 1.75.79 1.75 1.76-.78 1.76-1.75 1.76zM20 19h-3v-5.6c0-3.37-4-3.11-4 0V19h-3V8h3v1.77c1.4-2.59 7-2.78 7 2.48V19z" />
+            </svg>
+            Skriv til mig på LinkedIn
+          </a>
+        </div>
+
+        <p class="mt-10 text-sm text-ink-400">
+          Foretrækker du telefonen? Ring på <a href={`tel:${site.owner.phone.replace(/\s+/g, "")}`} class="text-white underline decoration-brand-300/50 underline-offset-4 hover:decoration-brand-300">{site.owner.phone}</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

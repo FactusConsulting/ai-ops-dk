@@ -1,0 +1,66 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const cases = (await getCollection("cases"))
+  .filter((c) => !c.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const formatter = new Intl.DateTimeFormat("da-DK", { year: "numeric", month: "long" });
+---
+
+<BaseLayout
+  title="Cases"
+  description="Udvalgte AI-projekter jeg har leveret for danske virksomheder."
+>
+  <section class="bg-white border-b border-ink-100">
+    <div class="container-page pt-20 md:pt-28 pb-12">
+      <span class="eyebrow">Cases</span>
+      <h1 class="heading-1 mt-4 max-w-3xl">Konkrete resultater fra konkrete forløb.</h1>
+      <p class="lead mt-6 max-w-2xl">
+        Et udvalg af opgaver jeg har løst — fra strategi og arkitektur til hands-on
+        implementering. Detaljer er anonymiseret hvor kunden ønsker det.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-y bg-ink-50/50">
+    <div class="container-page">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {cases.map((c) => (
+          <a href={`/cases/${c.id}`} class="card flex flex-col group">
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="text-xs font-semibold uppercase tracking-wider text-brand-700">{c.data.industry}</span>
+              <span class="text-ink-300">·</span>
+              <span class="text-xs text-ink-500">{c.data.duration}</span>
+              <span class="text-ink-300">·</span>
+              <time class="text-xs text-ink-500" datetime={c.data.date.toISOString()}>
+                {formatter.format(c.data.date)}
+              </time>
+            </div>
+            <h2 class="heading-3 mt-3 group-hover:text-brand-700 transition-colors">{c.data.title}</h2>
+            <p class="prose-body mt-3 text-[0.95rem] flex-1">{c.data.summary}</p>
+
+            {c.data.outcomes.length > 0 && (
+              <div class="mt-6 pt-6 border-t border-ink-100 grid grid-cols-3 gap-4">
+                {c.data.outcomes.slice(0, 3).map((o) => (
+                  <div>
+                    <p class="font-display font-bold text-lg md:text-xl text-ink-900 leading-tight">{o.value}</p>
+                    <p class="text-xs text-ink-500 mt-1">{o.label}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <span class="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700 group-hover:gap-2.5 transition-all">
+              Læs case
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

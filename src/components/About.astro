@@ -1,0 +1,61 @@
+---
+import { site } from "../config/site";
+---
+
+<section id="om-mig" class="section-y bg-white">
+  <div class="container-page">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+      <div class="lg:col-span-5">
+        <div class="aspect-[4/5] rounded-2xl bg-gradient-to-br from-ink-100 via-brand-50 to-accent-100/40 border border-ink-200 overflow-hidden relative">
+          <div class="absolute inset-0 flex items-center justify-center">
+            <span class="text-7xl font-display font-bold text-ink-300 select-none">LWA</span>
+          </div>
+          <div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-white via-white/80 to-transparent">
+            <p class="text-xs uppercase tracking-wider font-semibold text-ink-500">{site.owner.location}</p>
+            <p class="font-display font-bold text-lg text-ink-900 mt-1">{site.owner.name}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-7">
+        <span class="eyebrow">Om mig</span>
+        <h2 class="heading-2 mt-3">
+          Tekniker af baggrund. Pragmatiker af nødvendighed.
+        </h2>
+        <div class="mt-6 space-y-5 prose-body text-[1.0625rem]">
+          <p>
+            Jeg har arbejdet med software og infrastruktur i over 15 år — fra
+            startups til store organisationer, fra on-prem datacentre til moderne
+            cloud-platforme. De seneste år har AI fyldt hovedparten af min tid.
+          </p>
+          <p>
+            Jeg startede AI-Ops fordi jeg så for mange virksomheder bruge formuer
+            på AI-pilots der aldrig kom i produktion. Eller værre: kom i produktion
+            uden at nogen vidste hvad de kostede, hvad de besluttede, eller hvor
+            data endte.
+          </p>
+          <p>
+            Min tilgang er teknisk og konkret. Jeg bygger selv, jeg deployer selv,
+            og jeg kan tale med jeres udviklere på deres niveau — samtidig med at
+            jeg kan oversætte til ledelsen hvad det betyder for forretning og risiko.
+          </p>
+        </div>
+
+        <div class="mt-10 grid grid-cols-2 gap-x-8 gap-y-5">
+          <div>
+            <p class="text-xs uppercase tracking-wider font-semibold text-ink-500">Erfaring inden for</p>
+            <p class="mt-2 text-sm text-ink-800 leading-relaxed">
+              LLM-platforme · RAG · vector search · GPU-infrastruktur · MLOps · Kubernetes · cloud-arkitektur
+            </p>
+          </div>
+          <div>
+            <p class="text-xs uppercase tracking-wider font-semibold text-ink-500">Arbejder med</p>
+            <p class="mt-2 text-sm text-ink-800 leading-relaxed">
+              Anthropic Claude · OpenAI · open-weights modeller · Ollama · vLLM · llama.cpp · Pinecone · Weaviate
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

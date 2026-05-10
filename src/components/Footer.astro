@@ -1,0 +1,59 @@
+---
+import { site } from "../config/site";
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-ink-100 bg-ink-50">
+  <div class="container-page py-14 md:py-16">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
+      <div class="md:col-span-2">
+        <div class="flex items-center gap-2.5">
+          <span class="flex items-center justify-center w-9 h-9 rounded-lg bg-gradient-to-br from-brand-600 to-accent-600 text-white font-bold text-sm">
+            AI
+          </span>
+          <span class="font-display font-bold text-lg tracking-tight text-ink-900">
+            ai-ops<span class="text-brand-600">.</span>dk
+          </span>
+        </div>
+        <p class="mt-4 text-sm text-ink-600 max-w-md leading-relaxed">
+          {site.description}
+        </p>
+      </div>
+
+      <div>
+        <h4 class="text-xs font-semibold uppercase tracking-wider text-ink-900">Naviger</h4>
+        <ul class="mt-4 space-y-2.5">
+          {site.nav.map((item) => (
+            <li>
+              <a href={item.href} class="text-sm text-ink-600 hover:text-ink-900 transition-colors">
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="text-xs font-semibold uppercase tracking-wider text-ink-900">Kontakt</h4>
+        <ul class="mt-4 space-y-2.5 text-sm">
+          <li>
+            <a href={`mailto:${site.owner.email}`} class="text-ink-600 hover:text-ink-900 transition-colors">
+              {site.owner.email}
+            </a>
+          </li>
+          <li>
+            <a href={site.owner.linkedin} class="text-ink-600 hover:text-ink-900 transition-colors" target="_blank" rel="noopener">
+              LinkedIn
+            </a>
+          </li>
+          <li class="text-ink-500">{site.owner.location}</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-12 pt-6 border-t border-ink-200 flex flex-col md:flex-row justify-between gap-4 text-xs text-ink-500">
+      <p>© {year} {site.owner.name}. Alle rettigheder forbeholdes.</p>
+      <p>Bygget med Astro · hostet på Cloudflare Pages</p>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,57 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("blog"))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const formatter = new Intl.DateTimeFormat("da-DK", { year: "numeric", month: "long", day: "numeric" });
+---
+
+<BaseLayout
+  title="Blog"
+  description="Indsigter om AI-infrastruktur, LLM-implementering og hvad der virker (og ikke virker) i praksis."
+>
+  <section class="bg-white border-b border-ink-100">
+    <div class="container-page pt-20 md:pt-28 pb-12">
+      <span class="eyebrow">Blog</span>
+      <h1 class="heading-1 mt-4 max-w-3xl">Tanker fra praksis.</h1>
+      <p class="lead mt-6 max-w-2xl">
+        Korte, konkrete artikler om AI i virkeligheden — hvad der virker,
+        hvad der ikke gør, og de beslutninger jeg ser kunder kæmpe med.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-y bg-ink-50/50">
+    <div class="container-page">
+      {posts.length === 0 ? (
+        <p class="prose-body">Ingen artikler endnu. Snart kommer der noget her.</p>
+      ) : (
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {posts.map((post) => (
+            <a href={`/blog/${post.id}`} class="card flex flex-col group">
+              <div class="flex items-center gap-2 flex-wrap text-xs text-ink-500">
+                <time datetime={post.data.date.toISOString()}>{formatter.format(post.data.date)}</time>
+                {post.data.readingTime && (
+                  <>
+                    <span>·</span>
+                    <span>{post.data.readingTime}</span>
+                  </>
+                )}
+              </div>
+              <h2 class="heading-3 mt-3 group-hover:text-brand-700 transition-colors">{post.data.title}</h2>
+              <p class="prose-body mt-3 text-[0.95rem] flex-1">{post.data.description}</p>
+              <div class="mt-5 flex flex-wrap gap-2">
+                {post.data.tags.slice(0, 3).map((t) => (
+                  <span class="px-2.5 py-1 rounded-md bg-ink-100 text-xs text-ink-700 font-medium">{t}</span>
+                ))}
+              </div>
+            </a>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+</BaseLayout>
