@@ -4,6 +4,8 @@ import tailwindcss from '@tailwindcss/vite';
 
 import sitemap from '@astrojs/sitemap';
 
+import cloudflare from '@astrojs/cloudflare';
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://ai-ops.dk',
@@ -18,4 +20,5 @@ export default defineConfig({
   },
 
   integrations: [sitemap()],
+  adapter: cloudflare(),
 });
