@@ -35,9 +35,13 @@ Per domæne:
 | JS + Bash + PowerShell | ~98 % | ~96 % | −2pp |
 | App-arkitektur | ~99 % | ~97 % | −2pp |
 | Cloud + OT | ~99 % | ~98 % | −1pp |
-| Cross-domain scenarier | ~97 % | ~95 % | −2pp |
+| Cross-domain Part A (analyse) | ~100 % | ~100 % | 0pp |
+| Cross-domain Part B (**kode/IaC**) | **~80 %** | **~55 %** | **−25pp** |
+| Cross-domain Part C (design) | ~100 % | ~100 % | 0pp |
 
-Stort set hele gabet kommer fra ét sted: **kode-tunge generations-opgaver** i Part B af scenarie-chunken. Der scorer 26B 80 % og 4B kun 55 % — det er det enkelte sted hvor størrelsen matter for alvor. Skal modellen skrive en komplet Terraform-modul fra bunden? Brug 26B. Skal den klassificere, opsummere, hente fakta, formatere data, eller drive en RAG-bot? 4B er fint.
+Det er **én række i tabellen** der bryder mønstret. På alt det andet — analyse, design, klassificering, sprog-specifik kode-forståelse, infrastruktur-spørgsmål — er forskellen 1-3 procentpoint. På Part B, **kode-tunge generations-opgaver fra scratch** (skriv et komplet Terraform-modul, en fuld Ansible-playbook, et færdigt Go-program), kollapser 4B'en til 55 % mens 26B holder 80 %.
+
+Det er det enkelte sted hvor størrelsen matter for alvor. Skal modellen skrive komplet IaC eller produktionsklar kode fra bunden? Brug 26B (eller en frontier-model). Skal den klassificere, opsummere, hente fakta, formatere data, drive en RAG-bot eller analysere et givent stykke kode? 4B er fint.
 
 ## Den skjulte gevinst: parallelitet
 
