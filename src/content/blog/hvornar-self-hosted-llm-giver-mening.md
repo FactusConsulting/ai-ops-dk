@@ -1,6 +1,6 @@
 ---
 title: "Hvornår giver self-hosted LLM faktisk mening?"
-description: "De fleste virksomheder skal ikke hoste deres egen LLM. Men nogle skal — og det er værd at vide hvilke kriterier der reelt afgør det."
+description: "De fleste organisationer skal ikke hoste deres egen LLM. Men nogle skal — og det er værd at vide hvilke kriterier der reelt afgør det."
 date: 2026-04-18
 tags: ["LLM", "Infrastruktur", "Self-hosted"]
 readingTime: "6 min"
