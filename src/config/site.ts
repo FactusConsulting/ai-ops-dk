@@ -16,7 +16,7 @@ export const site = {
   company: {
     legalName: "Factus Consulting ApS",
     address: "Rørløkken 62, 2730 Herlev",
-    cvr: "", // TODO: udfyld CVR-nummer (find på virk.dk)
+    cvr: "36900725",
   },
   related: {
     factus: "https://factus.dk",
