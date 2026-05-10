@@ -1,6 +1,6 @@
 ---
 title: "4B vs 26B: kun 1.89 procentpoint gap — fra mine egne tests"
-description: "Standard-antagelsen er 'brug den største model der passer'. 350+ tests fra eget eval-framework viser at sandheden er mere interessant — og at små lokale modeller ofte er det rigtige valg."
+description: "Standard-antagelsen er 'brug den største model der passer'. 350+ tests fra eget eval-framework viser at sandheden er mere interessant — og at små lokale modeller ofte er 'godt nok' til opgaven og dermed kan være det rigtige valg."
 date: 2026-05-10
 tags: ["LLM", "Lokale modeller", "Gemma", "Benchmarks", "Cost"]
 readingTime: "6 min"
@@ -74,6 +74,19 @@ I evalueringen flagger judges når en model løser et problem **anderledes end r
 
 Det betyder: 4B'en finder ofte sin egen vej til det rigtige svar i stedet for at gentage reference-tankegangen. Det er sundt. Det betyder også at små modeller ikke bare er "lavere kvalitet 26B'er" — de har deres egne tilgange til problemer.
 
+## Q1 2026 alene har flyttet hegnspælene markant
+
+En af grundene til at "brug den største model der passer"-defaulten er forældet er at **lokale modeller har bevæget sig ekstremt hurtigt det sidste kvartal**. Bare i Q1 2026 er der landet ting der ville have været science fiction for 6 måneder siden:
+
+- **Gemma 4-familien** med E4B (4B model) der scorer 96.67 % på mit eval-framework. Et 4B-model på 2024-niveau ville have ligget i 70-80 % området på samme spørgsmål
+- **TurboQuant KV-cache** (Q4-fodaftryk, Q8-kvalitet) — gør det realistisk at have store contexts på begrænset VRAM uden at miste kvalitet
+- **Multi-Token Prediction (MTP)** lander i vLLM for understøttede modeller — markant throughput-løft
+- **Mistral Small 3** (24B-klassen) lukker gabet til frontier-modellerne på instruction following og struktureret output
+- **Qwen3-familien** har specifikt forbedret dansk og andre ikke-engelske sprog, en svaghed der historisk har gjort lokale modeller mindre brugbare i DK
+- **Distilleret Opus-niveau ræsonnement** ned til 27B parametre i flere eksperimentelle releases (kvalitet stadig variabel, men retningen er klar)
+
+Det betyder også at en tommelfingerregel "lokal model = -10 procentpoint vs frontier" ikke længere holder. På mange opgavetyper er gabet under 5 pp — og krymper hver måned. Hvis I traf jeres "vi går med cloud frontier"-beslutning for 12 måneder siden ud fra dårlig kvalitet på lokale modeller, er det værd at gentage øvelsen nu. Tallene er anderledes.
+
 ## Den praktiske strategi: rute opgaver, brug ikke én model til alt
 
 Det her er hvor det bliver interessant. I stedet for at vælge én model og bruge den til alt, opdeler jeg opgaverne efter hvad der er flaskehalsen:
@@ -101,7 +114,7 @@ Vær ærlig om grænserne:
 
 ## Bottom line
 
-"Brug den største model der passer" er den dyreste default i AI-infrastruktur. Den koster GPU-investeringer der kunne være brugt smartere, og den lukker døren for use-cases hvor parallelitet er mere værd end et par procentpoint.
+"Brug den største model der passer" er ikke længere en sikker default i AI-infrastruktur. Den koster GPU-investeringer der kunne være brugt smartere, og den lukker døren for use-cases hvor parallelitet er mere værd end et par procentpoint. Små lokale modeller er ikke det rigtige valg til alt — men de er ofte "**godt nok**" til en konkret opgave, og det skifter regnestykket markant.
 
 Og hold den her i mente: **alt det her er målt på hardware for under 10.000 kr.** Ikke H100-rack, ikke MI300X-kapacitet — bare en enkelt forbrugerklasse-GPU pr. node og et godt setup omkring den. Hvis det er hvad man kan opnå for under en månedsløn i hardware-investering, så er der ikke meget grund til at antage at "lokal AI" er forbeholdt store organisationer.
 
