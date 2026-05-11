@@ -2,6 +2,7 @@
 title: "4B vs 26B: kun 1.89 procentpoint gap — fra mine egne tests"
 description: "Standard-antagelsen er 'brug den største model der passer'. 350+ tests fra eget eval-framework viser at sandheden er mere interessant — og at små lokale modeller ofte er 'godt nok' til opgaven og dermed kan være det rigtige valg."
 date: 2026-05-10
+updated: 2026-05-12
 tags: ["LLM", "Lokale modeller", "Gemma", "Benchmarks", "Cost"]
 readingTime: "6 min"
 ---
@@ -12,12 +13,25 @@ Mine egne tests siger noget andet. Jeg har bygget et internt eval-framework med 
 
 Og vigtigt for hvad jeg er på vej til: **det hele kører på lokal hardware der har kostet mindre end 10.000 kr.** Ikke et datacenter-rack af H100'ere. En enkelt forbrugerklasse-GPU pr. node, llama.cpp og en smule tuning. Det er det realistiske setup for mange små og mellemstore organisationer der gerne vil køre AI lokalt — og det er det setup tallene nedenfor er målt på.
 
+> **Metodeboks**
+>
+> - **Eval-sæt:** 350+ spørgsmål fordelt på 9 chunks — Networking, Linux, Kubernetes, Dev, OpenTofu, Ansible, Go, Rust, .NET, Python, JS, Bash, PowerShell, app-arkitektur, on-prem, cloud, OT, samt cross-domain scenarier opdelt i Part A (analyse) / Part B (kode/IaC fra scratch) / Part C (design)
+> - **Hardware:** forbrugerklasse-GPU pr. node (under 10.000 kr/node)
+> - **Inference runtime:** llama.cpp turbo-fork (build b8753 ved publish-tidspunkt) med turbo4 KV-cache
+> - **Quantization:** 26B kørt i Q6_K (production), 4B kørt i BF16; 31B testet i Q4_K_M og Q5_K_M; også Q5_K_L testet på 26B til sammenligning
+> - **Sampling:** temperatur 0 for deterministiske runs hvor muligt; spread måles på tværs af 3 kørsler pr. konfiguration
+> - **Judges:** to parallelle Claude Opus 4.6-judges per kørsel, scoring via struktureret rubric (Pass / Partial / Fail + `alternative_acceptable`-flag); final score = mean(Judge A, Judge B) per spørgsmål
+> - **Inter-judge agreement:** typisk 94-98 %; ved lavere agreement bruges super-judge
+> - **Setup-detaljer holdes opdateret i mit interne eval-repo** — sig til hvis du vil have prompt-template, scoring-rubric eller anonymiserede eksempler fra et givet spørgsmål
+>
+> Det her er *mit* eval-sæt på *min* hardware. De konkrete tal er derfor ikke en universel benchmark — de er en strukturel observation: gabet på reelle workloads er ofte mindre end den intuitive forventning.
+
 Resultatet for to Gemma 4-konfigurationer på samme hardware:
 
 | Model | Score | Spread (3 runs) |
 |---|---|---|
-| **Gemma 4 26B Q6_K** | **98.56 %** | 0.67pp |
-| **Gemma 4 4B BF16** | **96.67 %** | 1.62pp |
+| **Gemma 4 26B A4B (Q6_K)** | **98.56 %** | 0.67pp |
+| **Gemma 4 E4B (BF16)** | **96.67 %** | 1.62pp |
 
 **Gabet: 1.89 procentpoint i mit eval-sæt.** På et 350-spørgsmåls testsæt, vurderet af to uafhængige frontier-judges. Det er meget mindre end de fleste forventer — men det er stadig *mit* eval-sæt på *mine* opgaver. Hovedpointen er at gabet på reelle workloads ofte er mindre end den intuitive forventning. Konkrete tal kommer ud af konkrete tests.
 
@@ -84,11 +98,11 @@ Det betyder: 4B'en finder ofte sin egen vej til det rigtige svar i stedet for at
 
 En af grundene til at "brug den største model der passer"-defaulten er forældet er at **lokale modeller har bevæget sig ekstremt hurtigt det sidste kvartal**. Bare i Q1 2026 er der landet ting der ville have været science fiction for 6 måneder siden:
 
-- **Gemma 4-familien** med E4B (4B model) der scorer 96.67 % på mit eval-framework. Et 4B-model på 2024-niveau ville have ligget i 70-80 % området på samme spørgsmål
+- **Gemma 4-familien** — Google's officielle navngivning inkluderer **E2B**, **E4B**, **26B A4B** (MoE med ~4B aktive parametre) og **31B Dense**. E4B scorer 96.67 % på mit eval-framework; et 4B-niveau model fra 2024 ville have ligget i 70-80 %-området på samme spørgsmål
 - **TurboQuant KV-cache** (Q4-fodaftryk, Q8-kvalitet) — gør det realistisk at have store contexts på begrænset VRAM uden at miste kvalitet
 - **Multi-Token Prediction (MTP)** lander i vLLM for understøttede modeller — markant throughput-løft
-- **Mistral Small-familien** — Small 3-grenen (3, 3.1, 3.2) er allerede markeret legacy/deprecated, og Mistral peger nu på **Small 4** som standard. Iterationshastigheden er præcis pointen: 24B-klassen lukker gabet til frontier-modellerne på instruction following og struktureret output, og nye versioner lander hyppigere end de fleste teams kan nå at evaluere dem
-- **Qwen3-familien** har specifikt forbedret dansk og andre ikke-engelske sprog, en svaghed der historisk har gjort lokale modeller mindre brugbare i DK
+- **Mistral Small-familien** har vist at mindre modeller kan være stærke til latency- og cost-følsomme workloads, men konkrete modelnavne bør evalueres løbende — Mistral udfaser ældre Small-versioner hurtigt, og iterationshastigheden er præcis hvorfor en specifik version-claim her ville være forældet inden artiklen er læst færdig
+- **Qwen3-familien** har stærk multilingual dækning, hvilket historisk har været en svaghed ved lokale modeller. Men dansk kvalitet bør stadig valideres i egne domænetests — der er ikke nødvendigvis fuld paritet med engelsk endnu
 - **Distilleret Opus-niveau ræsonnement** ned til 27B parametre i flere eksperimentelle releases (kvalitet stadig variabel, men retningen er klar)
 
 Det betyder også at en tommelfingerregel "lokal model = -10 procentpoint vs frontier" ikke længere holder. På mange opgavetyper er gabet under 5 pp — og krymper hver måned. Hvis I traf jeres "vi går med cloud frontier"-beslutning for 12 måneder siden ud fra dårlig kvalitet på lokale modeller, er det værd at gentage øvelsen nu. Tallene er anderledes.

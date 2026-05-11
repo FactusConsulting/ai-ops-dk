@@ -13,7 +13,7 @@ technologies:
   - "vLLM (FP8 + FP8 KV-cache)"
   - "llama.cpp (GGUF)"
   - "Open WebUI · Caddy"
-  - "Gemma 4 (4B / 26B-MoE / 31B)"
+  - "Gemma 4 (E4B / 26B A4B MoE / 31B Dense)"
   - "Mistral Small · Qwen3"
   - "Turboquants · MTP"
 outcomes:
@@ -66,7 +66,7 @@ Vector-laget er bevidst lagt på **Postgres + pgvector** frem for en separat vec
 
 Modelevalueringen har spændt **fra 4B op til 31B parametre** — bevidst bredt for at finde den rette balance mellem kvalitet, latency og GPU-forbrug pr. use case. Konkret testet:
 
-- **Gemma 4** i flere konfigurationer: fra den lille 4B (hurtig, billig at køre), over en 26B/4B MoE-variant med sparse activation, til den fulde 31B dense
+- **Gemma 4** i flere officielle konfigurationer: **E4B** (~4B aktive parametre — hurtig, billig at køre), **26B A4B** (MoE med ~4B aktive via sparse activation), og **31B Dense** (fuld stor model)
 - **Mistral Small** modeller
 - **Qwen3**
 

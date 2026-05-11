@@ -60,17 +60,52 @@ const ogImage = new URL(image, Astro.site ?? `https://${site.domain}`);
       type="application/ld+json"
       set:html={JSON.stringify({
         "@context": "https://schema.org",
-        "@type": "ProfessionalService",
-        name: site.name,
-        url: site.url,
-        description: site.description,
-        areaServed: "DK",
-        founder: {
-          "@type": "Person",
-          name: site.owner.name,
-          jobTitle: site.owner.role,
-          email: site.owner.email,
-        },
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": `${site.url}#organization`,
+            name: site.company.legalName,
+            alternateName: site.name,
+            url: site.url,
+            description: site.description,
+            taxID: `DK${site.company.cvr}`,
+            address: { "@type": "PostalAddress", streetAddress: "Rørløkken 62", postalCode: "2730", addressLocality: "Herlev", addressCountry: "DK" },
+            email: site.owner.email,
+            areaServed: "DK",
+          },
+          {
+            "@type": "Person",
+            "@id": `${site.url}#person`,
+            name: site.owner.name,
+            jobTitle: site.owner.role,
+            email: site.owner.email,
+            url: site.owner.linkedin,
+            worksFor: { "@id": `${site.url}#organization` },
+            sameAs: [site.owner.linkedin],
+          },
+          {
+            "@type": "ProfessionalService",
+            "@id": `${site.url}#service`,
+            name: site.name,
+            url: site.url,
+            description: site.description,
+            provider: { "@id": `${site.url}#organization` },
+            founder: { "@id": `${site.url}#person` },
+            areaServed: { "@type": "Country", name: "Denmark" },
+            hasOfferCatalog: {
+              "@type": "OfferCatalog",
+              name: "AI-ydelser",
+              itemListElement: [
+                { "@type": "Offer", itemOffered: { "@type": "Service", name: "AI-strategi og roadmap" } },
+                { "@type": "Offer", itemOffered: { "@type": "Service", name: "AI-infrastruktur" } },
+                { "@type": "Offer", itemOffered: { "@type": "Service", name: "AI-implementering" } },
+                { "@type": "Offer", itemOffered: { "@type": "Service", name: "AI-governance og sikkerhed" } },
+                { "@type": "Offer", itemOffered: { "@type": "Service", name: "Oplæring af team" } },
+                { "@type": "Offer", itemOffered: { "@type": "Service", name: "AI-sundhedstjek" } },
+              ],
+            },
+          },
+        ],
       })}
     />
   </head>

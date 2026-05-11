@@ -2,6 +2,7 @@
 title: "Hvorfor en god CLI ofte slår MCP for AI-agenter"
 description: "MCP fik al hypen, men for det meste lokale udviklingsarbejde er en velbygget CLI både billigere, hurtigere og mere agent-venlig. Her er hvorfor — og hvor MCP til gengæld vinder."
 date: 2026-05-10
+updated: 2026-05-12
 tags: ["AI-agenter", "MCP", "CLI", "Tooling"]
 readingTime: "7 min"
 ---
@@ -106,7 +107,7 @@ Den fleksibilitet kommer gratis med shell. MCP kræver at *nogen* tænker hvert 
 Så langt om hvor CLI vinder. MCP er ikke værdiløs — det er reelt stærkere end CLI på flere fronter, og dem er værd at fremhæve:
 
 - **Governance og sikkerhed.** Capability negotiation, struktureret OAuth, scope-baserede permissions, audit-baseret adgangsstyring. CLIs kræver til gengæld sandboxing (Docker, gVisor eller eksplicit pre-approval-flow på shell-kommandoer) for at være enterprise-trygge. Hvis I står med regulerede data, en compliance-bagage, eller en agent der skal kunne handle på vegne af mange brugere med forskellige tilladelser, vinder MCP klart
-- **Eksterne SaaS-integrationer.** Når agenten skal tale med Notion, Slack, Salesforce, GitHub Enterprise eller en intern microservice over OAuth, er MCP designet til netop det — protokollen håndterer auth-flow, tilladelses-scoping og struktureret API-kontrakt på en måde der ville være ad-hoc og fejlbarslig med shell
+- **Eksterne SaaS-integrationer.** Når agenten skal tale med Notion, Slack, Salesforce, GitHub Enterprise eller en intern microservice over OAuth, er MCP designet til netop det — protokollen håndterer auth-flow, tilladelses-scoping og struktureret API-kontrakt på en måde der ville være ad-hoc og fejlbehæftet med shell
 - **Stateful, interaktive sessioner** — fx en databasesession med transaktion eller en igangværende multi-step API-flow med løbende state
 - **Miljøer uden shell** — browser-baseret agent, mobile, en sandbox uden `/bin/sh`
 - **Strukturerede streaming-events** med protokol-niveau garanti (live progress fra et langt job hvor agenten skal handle på struktureret feedback undervejs)

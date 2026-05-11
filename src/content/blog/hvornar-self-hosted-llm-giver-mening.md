@@ -2,6 +2,7 @@
 title: "Hvornår giver self-hosted LLM faktisk mening?"
 description: "De fleste organisationer skal ikke hoste deres egen LLM. Men nogle skal — og det er værd at vide hvilke kriterier der reelt afgør det."
 date: 2026-04-18
+updated: 2026-05-12
 tags: ["LLM", "Infrastruktur", "Self-hosted"]
 readingTime: "6 min"
 ---
@@ -16,9 +17,11 @@ Når man skærer al hype væk, er der reelt fire dimensioner der bestemmer om se
 
 LLM-API'er er ekstremt fleksible men har en pris pr. token. Self-hosting har høje faste omkostninger (GPU-hardware eller reserved capacity) men lave marginale omkostninger.
 
-Break-even er svær at angive med ét tal — flere variabler skal med samtidig:
+Break-even er svær at angive med ét tal — flere variabler skal med samtidig.
 
-- **Modelpris pr. token** — Sonnet 4.6 til ~$3 input / $15 output, GPT-mini-modeller billigere
+> **Pris-snapshot, maj 2026:** Claude Sonnet 4.6 ligger omkring **$3/M input** / **$15/M output** tokens. Billigere mini/nano-modeller findes hos både Anthropic, OpenAI og Google. **Priserne ændrer sig markant fra kvartal til kvartal** — en business case skal altid regnes på aktuelle priser, cache-hit-rate, output/input-ratio og forventet usage. Tallene nedenfor er rammeværktøjet, ikke svaret.
+
+- **Modelpris pr. token** — varierer med model og leverandør, regn med aktuelle priser
 - **Output-ratio** — output-tokens er typisk 5-6× dyrere end input. Workloads med høj output-andel (kode-generation, lange svar) tipper hurtigere mod self-hosting
 - **GPU-utilization** — en H100 der står stille 70 % af tiden er meget dyrere pr. produktiv token end API'er. Self-hosting kræver høj og forudsigelig last
 - **Caching** — leverandørernes prompt-caching kan halvere reel pris ved gentagne system prompts
@@ -63,7 +66,7 @@ Tre ting jeg konsekvent ser undervurderet i self-hosting business cases:
 
 1. **Kontinuerlig modelopdatering.** Frontier modeller forbedres hver 3.-6. måned. Open-weights gør det også, men I skal have en proces til at evaluere og rul-ud — ellers stagnerer jeres løsning.
 
-2. **GPU-utilization.** Det lyder smart at have egen H100 — indtil man indser at den står stille 70% af tiden. API'erne deler kapacitet på tværs af tusindvis af kunder.
+2. **GPU-utilization.** Det lyder smart at have egen H100 — indtil man indser at den står stille 70 % af tiden. API'erne deler kapacitet på tværs af tusindvis af kunder.
 
 3. **MLOps-modenhed.** Hvis I ikke allerede har monitoring, deployment automation, og evaluerings-pipelines for traditionel ML — så bygger I det fra scratch nu, oveni LLM-driften.
 
