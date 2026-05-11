@@ -87,7 +87,7 @@ En af grundene til at "brug den største model der passer"-defaulten er forælde
 - **Gemma 4-familien** med E4B (4B model) der scorer 96.67 % på mit eval-framework. Et 4B-model på 2024-niveau ville have ligget i 70-80 % området på samme spørgsmål
 - **TurboQuant KV-cache** (Q4-fodaftryk, Q8-kvalitet) — gør det realistisk at have store contexts på begrænset VRAM uden at miste kvalitet
 - **Multi-Token Prediction (MTP)** lander i vLLM for understøttede modeller — markant throughput-løft
-- **Mistral Small-familien** (Small 3 fra januar 2025, Small 3.1 fra marts 2025, og deres seneste iterationer) har vist 24B-klassen lukker gabet til frontier-modellerne på instruction following og struktureret output
+- **Mistral Small-familien** — Small 3-grenen (3, 3.1, 3.2) er allerede markeret legacy/deprecated, og Mistral peger nu på **Small 4** som standard. Iterationshastigheden er præcis pointen: 24B-klassen lukker gabet til frontier-modellerne på instruction following og struktureret output, og nye versioner lander hyppigere end de fleste teams kan nå at evaluere dem
 - **Qwen3-familien** har specifikt forbedret dansk og andre ikke-engelske sprog, en svaghed der historisk har gjort lokale modeller mindre brugbare i DK
 - **Distilleret Opus-niveau ræsonnement** ned til 27B parametre i flere eksperimentelle releases (kvalitet stadig variabel, men retningen er klar)
 
