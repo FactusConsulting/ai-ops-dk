@@ -32,6 +32,8 @@ const ogImage = new URL(image, Astro.site ?? `https://${site.domain}`);
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="/ai-ops-mark.svg" />
     <link rel="alternate icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="alternate" type="application/rss+xml" title={`${site.name} blog`} href="/rss.xml" />
     <meta name="generator" content={Astro.generator} />
 
     <title>{fullTitle}</title>
@@ -52,8 +54,7 @@ const ogImage = new URL(image, Astro.site ?? `https://${site.domain}`);
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
 
-    <link rel="preconnect" href="https://rsms.me/" />
-    <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/InterVariable.woff2" crossorigin />
 
     <script
       type="application/ld+json"

@@ -7,15 +7,18 @@ import { site } from "../config/site";
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
       <div class="lg:col-span-5">
         <div class="aspect-[4/5] rounded-2xl border border-ink-200 overflow-hidden relative bg-ink-100">
-          <img
-            src="/profil.jpg"
-            alt={site.owner.name}
-            width="960"
-            height="1281"
-            loading="lazy"
-            decoding="async"
-            class="absolute inset-0 w-full h-full object-cover"
-          />
+          <picture class="absolute inset-0 w-full h-full">
+            <source srcset="/profil.avif" type="image/avif" />
+            <img
+              src="/profil.jpg"
+              alt={site.owner.name}
+              width="960"
+              height="1281"
+              loading="lazy"
+              decoding="async"
+              class="w-full h-full object-cover"
+            />
+          </picture>
           <div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/70 via-black/40 to-transparent">
             <p class="text-xs uppercase tracking-wider font-semibold text-white/80">{site.owner.location}</p>
             <p class="font-display font-bold text-lg text-white mt-1">{site.owner.name}</p>
