@@ -1,0 +1,161 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Contact from "../components/Contact.astro";
+
+const faq = [
+  {
+    q: "Hvad dækker AI-governance konkret?",
+    a: "AI-governance er rammerne der sikrer at jeres AI-anvendelse er compliant, dokumenteret og sikker: gap-analyse mod EU AI Act, data- og prompt-governance, audit logging, adgangsstyring og klare politikker for hvad AI må og ikke må. Bygget ind fra start frem for som et lag ovenpå bagefter.",
+  },
+  {
+    q: "Gælder EU AI Act allerede for os?",
+    a: "Dele af EU AI Act gælder allerede, og flere forpligtelser lander løbende. Hvad der rammer jer afhænger af hvilke AI-systemer I bruger og i hvilken risikoklasse de falder. Jeg har samlet status i en kort tidslinje på bloggen, og en gap-analyse afklarer jeres konkrete situation.",
+  },
+  {
+    q: "Hvordan hænger GDPR og EU AI Act sammen for AI?",
+    a: "De overlapper men er ikke det samme. GDPR styrer behandling af personoplysninger; EU AI Act regulerer selve AI-systemet og dets risiko. For de fleste AI-løsninger skal begge adresseres samtidig — typisk gennem data residency, dataminimering, logning og dokumenteret formål.",
+  },
+  {
+    q: "Kan I hjælpe med et AI-projekt der allerede er i produktion?",
+    a: "Ja. Et struktureret review afdækker hvor I står compliance-mæssigt, hvilke huller der er, og hvilke der haster. I går derfra med en konkret, prioriteret handlingsplan — ikke en rapport der ender i en skuffe.",
+  },
+];
+---
+
+<BaseLayout
+  title="AI-governance & EU AI Act"
+  description="EU AI Act- og GDPR-rådgivning for AI. Jeg laver gap-analyse, data- og prompt-governance, audit logging og adgangsstyring — bygget ind fra start, ikke bolt-on bagefter."
+>
+  <section class="bg-white border-b border-ink-100">
+    <div class="container-page pt-20 md:pt-28 pb-14">
+      <span class="eyebrow">AI-governance</span>
+      <h1 class="heading-1 mt-4 max-w-3xl">
+        AI-governance og EU AI Act-rådgivning
+      </h1>
+      <p class="lead mt-6 max-w-2xl">
+        AI i produktion uden governance er en risiko der venter på at blive
+        opdaget. Jeg hjælper danske organisationer med at gøre AI-anvendelsen
+        compliant, dokumenteret og sikker — EU AI Act og GDPR bygget ind fra
+        start.
+      </p>
+      <div class="mt-10 flex flex-wrap items-center gap-4">
+        <a href="/#kontakt" class="btn-primary">
+          Book en uforpligtende samtale
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          </svg>
+        </a>
+        <a href="/blog/eu-ai-act-tidslinje" class="btn-secondary">
+          Se EU AI Act-tidslinjen
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-y bg-white">
+    <div class="container-page max-w-3xl">
+      <span class="eyebrow">Hvorfor nu</span>
+      <h2 class="heading-2 mt-3">Governance er billigst når den bygges ind fra start</h2>
+      <div class="mt-6 space-y-5 prose-body text-[1.0625rem]">
+        <p>
+          Det dyre er ikke at lave governance — det er at lave den om bagefter,
+          når en løsning allerede er i produktion og ingen kan dokumentere hvad
+          den beslutter, hvad den koster, eller hvor data ender.
+        </p>
+        <p>
+          Dele af EU AI Act gælder allerede, og flere krav lander løbende. Jeg
+          har samlet status i en kort gennemgang:
+          <a href="/blog/eu-ai-act-tidslinje" class="text-brand-700 underline underline-offset-2">EU AI Act: tidslinjen, kort fortalt</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-y bg-ink-50/50 border-y border-ink-100">
+    <div class="container-page">
+      <div class="max-w-2xl">
+        <span class="eyebrow">Det leverer jeg</span>
+        <h2 class="heading-2 mt-3">Fra gap-analyse til kontrollerbar drift</h2>
+      </div>
+      <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-5">
+        <article class="card">
+          <h3 class="heading-3">EU AI Act gap-analyse</h3>
+          <p class="prose-body mt-3 text-[0.95rem]">
+            Kortlægning af jeres AI-systemer, deres risikoklasse og de huller
+            der konkret skal lukkes — prioriteret efter hvad der haster.
+          </p>
+        </article>
+        <article class="card">
+          <h3 class="heading-3">Data- og prompt-governance</h3>
+          <p class="prose-body mt-3 text-[0.95rem]">
+            Politikker og tekniske kontroller for hvilke data der må bruges,
+            hvordan prompts håndteres, og hvad der logges.
+          </p>
+        </article>
+        <article class="card">
+          <h3 class="heading-3">Audit logs og adgangsstyring</h3>
+          <p class="prose-body mt-3 text-[0.95rem]">
+            Sporbarhed på hvem der gjorde hvad, og adgang der matcher rolle og
+            datafølsomhed — dokumenterbart.
+          </p>
+        </article>
+        <article class="card">
+          <h3 class="heading-3">GDPR for AI</h3>
+          <p class="prose-body mt-3 text-[0.95rem]">
+            Data residency, dataminimering og dokumenteret formål — ofte
+            enklere med
+            <a href="/self-hosted-llm" class="text-brand-700 underline underline-offset-2">self-hosted LLM</a>.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-y bg-white">
+    <div class="container-page max-w-3xl">
+      <span class="eyebrow">Sammenhæng</span>
+      <h2 class="heading-2 mt-3">Governance er en del af hele rejsen</h2>
+      <div class="mt-6 space-y-5 prose-body text-[1.0625rem]">
+        <p>
+          Governance hænger sammen med arkitektur og infrastruktur — derfor er
+          det sjældent en isoleret leverance. Se hvordan det indgår i resten af
+          arbejdet
+          <a href="/ai-konsulent" class="text-brand-700 underline underline-offset-2">som AI-konsulent</a>,
+          se <a href="/cases" class="text-brand-700 underline underline-offset-2">cases</a>
+          fra offentlige forløb, eller læs mere på
+          <a href="/blog" class="text-brand-700 underline underline-offset-2">bloggen</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-y bg-ink-50/50 border-t border-ink-100">
+    <div class="container-page max-w-3xl">
+      <span class="eyebrow">FAQ</span>
+      <h2 class="heading-2 mt-3">Ofte stillede spørgsmål</h2>
+      <dl class="mt-8 space-y-8">
+        {faq.map((item) => (
+          <div>
+            <dt class="font-display font-bold text-lg text-ink-900">{item.q}</dt>
+            <dd class="mt-2 prose-body text-[1.0625rem]">{item.a}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  <Contact />
+
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faq.map((item) => ({
+        "@type": "Question",
+        name: item.q,
+        acceptedAnswer: { "@type": "Answer", text: item.a },
+      })),
+    })}
+  />
+</BaseLayout>

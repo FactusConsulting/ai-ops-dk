@@ -1,11 +1,17 @@
 ---
 import { site } from "../config/site";
 const year = new Date().getFullYear();
+
+const specialer = [
+  { label: "AI-konsulent", href: "/ai-konsulent" },
+  { label: "Self-hosted LLM", href: "/self-hosted-llm" },
+  { label: "AI-governance & EU AI Act", href: "/ai-governance" },
+];
 ---
 
 <footer class="border-t border-ink-100 bg-ink-50">
   <div class="container-page py-14 md:py-16">
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
+    <div class="grid grid-cols-1 md:grid-cols-5 gap-10">
       <div class="md:col-span-2">
         <div class="flex items-center gap-2.5">
           <svg class="w-9 h-9 text-brand-600" viewBox="0 0 200 200" fill="none" aria-hidden="true">
@@ -32,6 +38,22 @@ const year = new Date().getFullYear();
           {site.company.legalName}{site.company.cvr && ` · CVR ${site.company.cvr}`}<br />
           {site.company.address} · <a href={site.related.factus} class="hover:text-ink-700 underline decoration-ink-300 underline-offset-2">factus.dk</a>
         </p>
+      </div>
+
+      <div>
+        <h4 class="text-xs font-semibold uppercase tracking-wider text-ink-900">Specialer</h4>
+        <ul class="mt-4 space-y-2.5">
+          {specialer.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                class="text-sm text-ink-600 hover:text-ink-900 transition-colors"
+              >
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
 
       <div>

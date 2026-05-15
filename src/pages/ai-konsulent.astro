@@ -1,0 +1,182 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Contact from "../components/Contact.astro";
+
+const faq = [
+  {
+    q: "Hvad laver en AI-konsulent egentlig?",
+    a: "En AI-konsulent hjælper med at afgøre hvor AI giver målbar værdi, designer den nødvendige infrastruktur, bygger løsningen og sørger for at den kommer sikkert i produktion. Hos mig dækker det hele vejen fra strategi og business case til hands-on implementering, governance og oplæring af jeres eget team.",
+  },
+  {
+    q: "Arbejder du med både private og offentlige organisationer i Danmark?",
+    a: "Ja. Jeg arbejder med danske organisationer i både privat og offentlig sektor — fra startups til styrelser. Offentlige forløb stiller typisk skarpere krav til data residency, dokumentation og udbudsregler, og det er en del af rådgivningen fra start.",
+  },
+  {
+    q: "Hvad koster en uafhængig AI-konsulent?",
+    a: "Jeg arbejder i korte, fokuserede forløb med en klart afgrænset leverance — fx en strategi-workshop, en arkitektur, et fungerende system eller et sundhedstjek af et eksisterende projekt. Pris afhænger af omfang; den første samtale er altid uforpligtende, og du går derfra med konkret feedback uanset om vi arbejder sammen.",
+  },
+  {
+    q: "Er du bundet til en bestemt AI-leverandør?",
+    a: "Nej. Jeg er vendor-neutral og rådgiver uden fast platformbinding. Anbefalingen følger jeres krav til data, latency og økonomi — ikke en partneraftale. Det betyder også at self-hosted, cloud og hybrid bliver vurderet ærligt op mod hinanden.",
+  },
+];
+---
+
+<BaseLayout
+  title="AI-konsulent i Danmark"
+  description="Uafhængig AI-konsulent med 20+ års erfaring. Jeg hjælper danske organisationer fra AI-strategi til AI i produktion — vendor-neutralt, med GDPR og EU AI Act bygget ind fra start."
+>
+  <section class="bg-white border-b border-ink-100">
+    <div class="container-page pt-20 md:pt-28 pb-14">
+      <span class="eyebrow">AI-konsulent</span>
+      <h1 class="heading-1 mt-4 max-w-3xl">
+        AI-konsulent til danske organisationer
+      </h1>
+      <p class="lead mt-6 max-w-2xl">
+        Jeg er uafhængig AI-konsulent med 20+ års erfaring i software og
+        infrastruktur. Jeg hjælper organisationer i privat og offentlig sektor
+        med at gå fra AI-idé til AI i produktion — uden at det ender som endnu en
+        pilot der aldrig kom videre.
+      </p>
+      <div class="mt-10 flex flex-wrap items-center gap-4">
+        <a href="/#kontakt" class="btn-primary">
+          Book en uforpligtende samtale
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          </svg>
+        </a>
+        <a href="/cases" class="btn-secondary">Se cases</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-y bg-white">
+    <div class="container-page max-w-3xl">
+      <span class="eyebrow">Hvornår</span>
+      <h2 class="heading-2 mt-3">Hvornår giver en AI-konsulent mening?</h2>
+      <div class="mt-6 space-y-5 prose-body text-[1.0625rem]">
+        <p>
+          De fleste organisationer har ikke brug for en AI-konsulent til at
+          fortælle dem at AI er vigtigt. De har brug for nogen der kan skære
+          igennem og sige <em>hvor</em> det konkret giver værdi — og hvor det
+          ikke gør.
+        </p>
+        <p>Typisk bliver jeg hentet ind når:</p>
+        <ul class="space-y-2.5">
+          <li class="flex items-start gap-2.5">
+            <span class="text-brand-600 mt-1">→</span>
+            <span>En AI-pilot er stoppet før produktion, og ingen ved helt hvorfor.</span>
+          </li>
+          <li class="flex items-start gap-2.5">
+            <span class="text-brand-600 mt-1">→</span>
+            <span>AI <em>er</em> i produktion — men ingen kender omkostningen, beslutningerne eller hvor data ender.</span>
+          </li>
+          <li class="flex items-start gap-2.5">
+            <span class="text-brand-600 mt-1">→</span>
+            <span>Der skal træffes et infrastrukturvalg (self-hosted, cloud eller hybrid) med konsekvenser i flere år.</span>
+          </li>
+          <li class="flex items-start gap-2.5">
+            <span class="text-brand-600 mt-1">→</span>
+            <span>EU AI Act og GDPR skal bygges ind, ikke bolt-on'es bagefter.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-y bg-ink-50/50 border-y border-ink-100">
+    <div class="container-page">
+      <div class="max-w-2xl">
+        <span class="eyebrow">Det leverer jeg</span>
+        <h2 class="heading-2 mt-3">Hele rejsen — fra strategi til drift</h2>
+        <p class="lead mt-5">
+          Leverancen er en konkret plan, et fungerende system eller et team der
+          kan bære det videre. Ikke rapporter der ender i en skuffe.
+        </p>
+      </div>
+      <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-5">
+        <article class="card">
+          <h3 class="heading-3">AI-strategi og roadmap</h3>
+          <p class="prose-body mt-3 text-[0.95rem]">
+            Use case discovery, ROI-modeller og et prioriteret roadmap I kan
+            eksekvere på — inkl. ærlig make/buy/partner-vurdering.
+          </p>
+        </article>
+        <article class="card">
+          <h3 class="heading-3">AI-infrastruktur</h3>
+          <p class="prose-body mt-3 text-[0.95rem]">
+            Sikker, skalerbar platform. <a href="/self-hosted-llm" class="text-brand-700 underline underline-offset-2">Self-hosted LLM</a>,
+            cloud eller hybrid — afhængigt af krav til data, latency og økonomi.
+          </p>
+        </article>
+        <article class="card">
+          <h3 class="heading-3">Implementering</h3>
+          <p class="prose-body mt-3 text-[0.95rem]">
+            Hands-on udvikling af assistenter, agenter og RAG over interne
+            dokumenter — bragt i produktion med monitoring.
+          </p>
+        </article>
+        <article class="card">
+          <h3 class="heading-3">Governance og sikkerhed</h3>
+          <p class="prose-body mt-3 text-[0.95rem]">
+            <a href="/ai-governance" class="text-brand-700 underline underline-offset-2">EU AI Act og GDPR</a>
+            bygget ind fra start — gap-analyse, audit logs og adgangsstyring.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-y bg-white">
+    <div class="container-page max-w-3xl">
+      <span class="eyebrow">Tilgang</span>
+      <h2 class="heading-2 mt-3">Teknisk og konkret — ikke buzzword-bingo</h2>
+      <div class="mt-6 space-y-5 prose-body text-[1.0625rem]">
+        <p>
+          Min tilgang er teknisk og hands-on. Jeg bygger selv, jeg deployer selv,
+          og jeg kan tale med jeres udviklere på deres niveau — samtidig med at
+          jeg kan oversætte til ledelsen hvad det betyder for forretning og
+          risiko.
+        </p>
+        <p>
+          Som uafhængig AI-konsulent er jeg vendor-neutral. Anbefalingen følger
+          jeres krav — ikke en partneraftale. Læs mere
+          <a href="/#om-mig" class="text-brand-700 underline underline-offset-2">om mig</a>,
+          se <a href="/cases" class="text-brand-700 underline underline-offset-2">konkrete cases</a>,
+          eller læs <a href="/blog" class="text-brand-700 underline underline-offset-2">bloggen</a>
+          hvor jeg deler hvad der virker — og ikke virker — i praksis.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-y bg-ink-50/50 border-t border-ink-100">
+    <div class="container-page max-w-3xl">
+      <span class="eyebrow">FAQ</span>
+      <h2 class="heading-2 mt-3">Ofte stillede spørgsmål</h2>
+      <dl class="mt-8 space-y-8">
+        {faq.map((item) => (
+          <div>
+            <dt class="font-display font-bold text-lg text-ink-900">{item.q}</dt>
+            <dd class="mt-2 prose-body text-[1.0625rem]">{item.a}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  <Contact />
+
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faq.map((item) => ({
+        "@type": "Question",
+        name: item.q,
+        acceptedAnswer: { "@type": "Answer", text: item.a },
+      })),
+    })}
+  />
+</BaseLayout>

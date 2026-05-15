@@ -1,0 +1,174 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Contact from "../components/Contact.astro";
+
+const faq = [
+  {
+    q: "Hvornår giver self-hosted LLM mening frem for et API?",
+    a: "Self-hosted LLM giver typisk mening når data ikke må forlade jeres miljø, når volumen er høj nok til at API-omkostningen overstiger drift af egen kapacitet, eller når latency og oppetid skal være under jeres egen kontrol. For de fleste organisationer er et API stadig det rigtige — det er præcis den vurdering jeg laver først, ærligt.",
+  },
+  {
+    q: "Kan en self-hosted LLM køre GDPR- og EU AI Act-compliant?",
+    a: "Ja, og det er ofte selve grunden til at vælge self-hosted. Når modellen kører på infrastruktur I kontrollerer, bestemmer I selv data residency, logning og hvem der har adgang. Governance bygges ind fra start — ikke som et lag ovenpå bagefter.",
+  },
+  {
+    q: "Hvilke modeller og hvilken stak arbejder du med?",
+    a: "Åbne modeller som Mistral Small, Qwen3 og Gemma, serveret med vLLM (inkl. FP8), llama.cpp eller Ollama afhængigt af hardware og krav. Retrieval bygges typisk på Postgres + pgvector med BAAI/bge-m3 og reranker, og hybrid søgning (dense + sparse + RRF). Alt valgt efter opgaven — ikke efter mode.",
+  },
+  {
+    q: "Hvad med GPU-omkostninger?",
+    a: "GPU-kapacitet er som regel den største post, og den kan optimeres markant — gennem rigtigt modelvalg, kvantisering (fx FP8), batching og ved at matche kapacitet til faktisk last frem for worst case. Jeg har målt det på tværs af 350+ tests; ofte er en mindre lokal model 'godt nok' til opgaven.",
+  },
+];
+---
+
+<BaseLayout
+  title="Self-hosted LLM"
+  description="Skal jeres LLM køre on-prem eller i eget cloud-miljø? Jeg designer og driver self-hosted LLM-platforme (vLLM, llama.cpp, Ollama) med fuld datakontrol — GDPR- og EU AI Act-klar."
+>
+  <section class="bg-white border-b border-ink-100">
+    <div class="container-page pt-20 md:pt-28 pb-14">
+      <span class="eyebrow">Self-hosted LLM</span>
+      <h1 class="heading-1 mt-4 max-w-3xl">
+        Self-hosted LLM — fuld kontrol over data og omkostninger
+      </h1>
+      <p class="lead mt-6 max-w-2xl">
+        Når data ikke må forlade huset, eller når API-regningen vokser hurtigere
+        end værdien, er en self-hosted LLM-platform svaret. Jeg designer,
+        bygger og driver den — on-prem, i eget cloud-miljø eller hybrid.
+      </p>
+      <div class="mt-10 flex flex-wrap items-center gap-4">
+        <a href="/#kontakt" class="btn-primary">
+          Book en uforpligtende samtale
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          </svg>
+        </a>
+        <a href="/blog/hvornar-self-hosted-llm-giver-mening" class="btn-secondary">
+          Læs: hvornår giver det mening?
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-y bg-white">
+    <div class="container-page max-w-3xl">
+      <span class="eyebrow">Beslutningen først</span>
+      <h2 class="heading-2 mt-3">De fleste skal ikke hoste deres egen LLM</h2>
+      <div class="mt-6 space-y-5 prose-body text-[1.0625rem]">
+        <p>
+          Lad os tage den ærlige samtale først: for mange organisationer er et
+          managed API det rigtige valg — billigere at komme i gang, mindre at
+          drifte. Self-hosted LLM bliver det rigtige når et eller flere af
+          disse gælder:
+        </p>
+        <ul class="space-y-2.5">
+          <li class="flex items-start gap-2.5">
+            <span class="text-brand-600 mt-1">→</span>
+            <span><strong>Datakrav:</strong> følsomme eller regulerede data der ikke må forlade jeres miljø.</span>
+          </li>
+          <li class="flex items-start gap-2.5">
+            <span class="text-brand-600 mt-1">→</span>
+            <span><strong>Volumen:</strong> forbruget er højt nok til at egen kapacitet er billigere end pris pr. token.</span>
+          </li>
+          <li class="flex items-start gap-2.5">
+            <span class="text-brand-600 mt-1">→</span>
+            <span><strong>Kontrol:</strong> latency, oppetid og modelversioner skal være under jeres styring.</span>
+          </li>
+        </ul>
+        <p>
+          Jeg uddyber kriterierne i bloggen:
+          <a href="/blog/hvornar-self-hosted-llm-giver-mening" class="text-brand-700 underline underline-offset-2">Hvornår giver self-hosted LLM faktisk mening?</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-y bg-ink-50/50 border-y border-ink-100">
+    <div class="container-page">
+      <div class="max-w-2xl">
+        <span class="eyebrow">Stakken</span>
+        <h2 class="heading-2 mt-3">Modeller og infrastruktur jeg arbejder med</h2>
+        <p class="lead mt-5">
+          Valgt efter opgaven, hardwaren og kravene — ikke efter hvad der er
+          mest hypet.
+        </p>
+      </div>
+      <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-5">
+        <article class="card">
+          <h3 class="heading-3">Modeller</h3>
+          <p class="prose-body mt-3 text-[0.95rem]">
+            Mistral Small, Qwen3, Gemma og andre åbne modeller — matchet til
+            opgavens faktiske krav, ikke til den største der findes.
+          </p>
+        </article>
+        <article class="card">
+          <h3 class="heading-3">Serving</h3>
+          <p class="prose-body mt-3 text-[0.95rem]">
+            vLLM med FP8 for gennemløb, llama.cpp og Ollama hvor det passer
+            bedre til hardware og drift.
+          </p>
+        </article>
+        <article class="card">
+          <h3 class="heading-3">Retrieval</h3>
+          <p class="prose-body mt-3 text-[0.95rem]">
+            Postgres + pgvector, BAAI/bge-m3 + reranker og hybrid retrieval
+            (dense + sparse + RRF) til RAG over jeres egne data.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-y bg-white">
+    <div class="container-page max-w-3xl">
+      <span class="eyebrow">Data og compliance</span>
+      <h2 class="heading-2 mt-3">Fuld datakontrol — GDPR og EU AI Act</h2>
+      <div class="mt-6 space-y-5 prose-body text-[1.0625rem]">
+        <p>
+          Den vigtigste fordel ved self-hosted er ikke pris — det er kontrol.
+          Når modellen kører på infrastruktur I ejer, bestemmer I selv data
+          residency, hvad der logges, og hvem der har adgang. Det gør
+          <a href="/ai-governance" class="text-brand-700 underline underline-offset-2">GDPR- og EU AI Act-compliance</a>
+          markant enklere at dokumentere.
+        </p>
+        <p>
+          Se også
+          <a href="/cases" class="text-brand-700 underline underline-offset-2">cases</a>
+          for konkrete platform-forløb, eller læs mere
+          <a href="/ai-konsulent" class="text-brand-700 underline underline-offset-2">om hvordan jeg arbejder som AI-konsulent</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-y bg-ink-50/50 border-t border-ink-100">
+    <div class="container-page max-w-3xl">
+      <span class="eyebrow">FAQ</span>
+      <h2 class="heading-2 mt-3">Ofte stillede spørgsmål</h2>
+      <dl class="mt-8 space-y-8">
+        {faq.map((item) => (
+          <div>
+            <dt class="font-display font-bold text-lg text-ink-900">{item.q}</dt>
+            <dd class="mt-2 prose-body text-[1.0625rem]">{item.a}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  <Contact />
+
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faq.map((item) => ({
+        "@type": "Question",
+        name: item.q,
+        acceptedAnswer: { "@type": "Answer", text: item.a },
+      })),
+    })}
+  />
+</BaseLayout>

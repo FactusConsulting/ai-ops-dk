@@ -2,9 +2,9 @@ export const site = {
   name: "AI-Ops",
   domain: "ai-ops.dk",
   url: "https://ai-ops.dk",
-  tagline: "AI-infrastruktur og forretningsklar AI for danske organisationer",
+  tagline: "AI-konsulent i Danmark · AI-infrastruktur der kommer i produktion",
   description:
-    "Uafhængig konsulent der hjælper organisationer — i både privat og offentlig sektor — med at bygge robust AI-infrastruktur og integrere AI dér hvor det skaber målbar værdi.",
+    "Uafhængig AI-konsulent der hjælper danske organisationer — privat og offentlig — med robust AI-infrastruktur og AI i produktion, dér hvor det skaber målbar værdi.",
   owner: {
     name: "Lars W. Andersen",
     role: "AI-konsulent og rådgiver",
